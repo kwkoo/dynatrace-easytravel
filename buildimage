@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Set this to your environment ID if on Dynatrace Managed
+DTXTenant="changeme"
+
+# Set this to <managed_server_host> if on Dynatrace Managed
+DTXServerHost="live.dynatrace.com"
+
+TIMEZONE="Asia/Singapore"
+EASYTRAVEL_VERSION="2.0.0"
+EASYTRAVEL_BUILD=2892
+
+cd `dirname $0`
+BASE=`pwd`
+cd - >> /dev/null
+
+docker build \
+	--rm \
+	-t dynatrace/easytravel:${EASYTRAVEL_VERSION} \
+	--build-arg DTXTENANT="${DTXTenant}" \
+	--build-arg DTXSERVERHOST="${DTXServerHost}" \
+	--build-arg TIMEZONE="${TIMEZONE}" \
+	--build-arg EASYTRAVEL_VERSION="${EASYTRAVEL_VERSION}" \
+	--build-arg EASYTRAVEL_BUILD="${EASYTRAVEL_BUILD}" \
+	.
